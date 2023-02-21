@@ -1,6 +1,7 @@
 # Darts game calculator
 
 - This is for automatically calculation of darts.
+- I want a free darts calculator, so I'm making it by myself.
 
 - Game Items
   - 301
