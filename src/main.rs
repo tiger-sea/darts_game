@@ -1,5 +1,6 @@
 use std::io;
 use std::io::Write;
+use ansi_term::Color;
 
 // my functions
 mod zero_one;
@@ -8,9 +9,10 @@ mod random;
 
 
 fn main() -> Result<(), ()> {
+    println!("");
     loop {
-        print!("Let's play darts!\n\
-                1: 301 Game\n\
+        println!("{}", Color::Green.bold().paint("Let's play darts!🎯"));
+        print!("1: 301 Game\n\
                 2: 501 Game\n\
                 3: Cricket Game\n\
                 4: Finish Practice\n\
@@ -37,11 +39,11 @@ fn main() -> Result<(), ()> {
             3 => cricket::cricket(),
             4 => random::random(),
             0 => {
-                println!("\n+++ Thank you! +++\n");
+                println!("\n{}\n", Color::Green.bold().paint("+++ Thank you! +++"));
                 return Ok(())
             },
             _ => {
-                println!("\n*** Sorry, it is invalid input... ***\n");
+                println!("{}", Color::Purple.paint("\n*** Sorry, it is invalid input... ***\n"));
                 continue
             },
         };
