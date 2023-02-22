@@ -6,7 +6,7 @@ use ansi_term::Color;
 mod zero_one;
 mod cricket;
 mod random;
-
+mod count_up;
 
 fn main() -> Result<(), ()> {
     println!("");
@@ -16,6 +16,7 @@ fn main() -> Result<(), ()> {
                 2: 501 Game\n\
                 3: Cricket Game\n\
                 4: Finish Practice\n\
+                5: Count Up\n\
                 0: Exit\n\
                 Choose a menu! -> ");
         // print!("Choose a menu! [1: 301 Game, 2: 501 Game, 3: Cricket Game, 4: Finish Practicek 0: Exit] -> ");
@@ -38,6 +39,7 @@ fn main() -> Result<(), ()> {
             2 => zero_one::game(501),
             3 => cricket::cricket(),
             4 => random::random(),
+            5 => count_up::count_up(),
             0 => {
                 println!("\n{}\n", Color::Green.bold().paint("+++ Thank you! +++"));
                 return Ok(())
@@ -50,4 +52,5 @@ fn main() -> Result<(), ()> {
     }
 }
 
+// TODO: 5: カウントアップを加える
 // TODO: input!マクロで書き直す
