@@ -8,7 +8,7 @@
 
 use std::io::Write;
 use ansi_term::Color;
-// use crate::suggest;
+use crate::suggest;
 // TODO: 点数のサジェスチョンが出る，例えば180には60,60,60とか
 // TODO: 点数のサジェスチョンは一本ずつ判定する．例えば30を15Dで上がろうとして一投目に10に入ったら追加表示で10Dを表示するとか
 
@@ -36,7 +36,7 @@ pub fn game(goal: u16) {
     let mut darts = 0; // for total darts finish
 
     // for first suggestion
-    // suggest::suggest(goal);
+    suggest::suggest(goal);
 
     loop {
         let mut total = 0; // for 1 round points
@@ -88,7 +88,7 @@ pub fn game(goal: u16) {
         if goal > 0 {
             println!("~~~ The {} Round Total: {} ~~~", round, Color::White.underline().paint(total.to_string()));
             println!("~~~ You require {} ~~~", Color::White.underline().paint(goal.to_string()));
-            // suggest::suggest(goal);
+            suggest::suggest(goal);
         } else {
             let comment = format!("Game shot!🎉 {} rounds ({} darts finish)", round, darts);
             println!("{}\n", Color::Cyan.bold().paint(comment));

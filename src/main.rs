@@ -7,6 +7,7 @@ mod zero_one;
 mod cricket;
 mod random;
 mod count_up;
+mod suggest;
 
 fn main() -> Result<(), ()> {
     println!("");
