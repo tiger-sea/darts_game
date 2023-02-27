@@ -8,6 +8,7 @@
 
 use std::io::Write;
 use ansi_term::Color;
+// use crate::suggest;
 // TODO: 点数のサジェスチョンが出る，例えば180には60,60,60とか
 // TODO: 点数のサジェスチョンは一本ずつ判定する．例えば30を15Dで上がろうとして一投目に10に入ったら追加表示で10Dを表示するとか
 
@@ -16,15 +17,26 @@ use ansi_term::Color;
 const NOT_EXIST: [u16; 18] = [23, 25, 29, 31, 35, 37, 41, 43, 44, 46, 47, 49, 52, 53, 55, 56, 58, 59];
 
 #[allow(unused_assignments)]
+#[allow(unused_doc_comments)]
 pub fn game(goal: u16) {
+    //! for zero_one game calculation
+    //! 
+    //! goal: 301 or 501 or random
+    /// round: basically 3 darts per round
+    /// darts: the number of throw dart
+    /// point: point of 1 throw
+
     println!("\n{} {}",
     Color::Green.bold().paint(goal.to_string()),
     Color::Green.bold().paint("Game! (If you wanna quit this game, just push enter key without any input or input non-number string)"));
-
+    
     let mut goal = goal;
     
     let mut round = 0; // for finish round
     let mut darts = 0; // for total darts finish
+
+    // for first suggestion
+    // suggest::suggest(goal);
 
     loop {
         let mut total = 0; // for 1 round points
@@ -44,8 +56,10 @@ pub fn game(goal: u16) {
                 Err(_) => 1024,
             };
 
+            // increment of darts throw
             darts += 1;
 
+            // determine next situation
             if point == 1024 { // quit
                 println!("{}\n", Color::Purple.paint("*** Quit the Game ***"));
                 return
@@ -54,16 +68,17 @@ pub fn game(goal: u16) {
                 darts -= 1;
                 round -= 1;
                 break
-            } else if goal < point { // burst
+            } else if goal < point || (goal - point) == 1 { // bust
                 println!("{}", Color::Yellow.bold().paint("No score..."));
                 goal += total;
                 total = 0;
                 break
-            } else if goal == point { // game shot
+            } else if goal == point { // game shot!
                 total += point;
                 goal -= point;
                 break
             }
+            // change these for next throw
             total += point;
             goal -= point;
         }
@@ -73,6 +88,7 @@ pub fn game(goal: u16) {
         if goal > 0 {
             println!("~~~ The {} Round Total: {} ~~~", round, Color::White.underline().paint(total.to_string()));
             println!("~~~ You require {} ~~~", Color::White.underline().paint(goal.to_string()));
+            // suggest::suggest(goal);
         } else {
             let comment = format!("Game shot!🎉 {} rounds ({} darts finish)", round, darts);
             println!("{}\n", Color::Cyan.bold().paint(comment));

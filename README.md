@@ -12,6 +12,7 @@
 - Future Features
   - Throw suggestion
   - Count Up
+  - Desktop App???
 
 
 *Tentatively published, so probably there are bugs
