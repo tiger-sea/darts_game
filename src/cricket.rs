@@ -1,5 +1,6 @@
+use ansi_term::Color;
 pub fn cricket() {
-    println!("\nCricket Game");
+    println!("\n{}", Color::Green.bold().paint("Cricket Game"));
 }
 
 /*
