@@ -1,11 +1,3 @@
-// pub fn which_one(menu: u8) {
-//     match menu {
-//         1 => game(301),
-//         2 => game(501),
-//         _ => return,
-//     };
-// }
-
 use std::io::Write;
 use ansi_term::Color;
 use crate::suggest;
@@ -16,7 +8,6 @@ use crate::suggest;
 // const NOT_EXIST: [u16; 9] = [179, 178, 176, 175, 173, 172, 169, 166, 163];
 const NOT_EXIST: [u16; 18] = [23, 25, 29, 31, 35, 37, 41, 43, 44, 46, 47, 49, 52, 53, 55, 56, 58, 59];
 
-#[allow(unused_assignments)]
 #[allow(unused_doc_comments)]
 pub fn game(goal: u16) {
     //! for zero_one game calculation
@@ -35,17 +26,17 @@ pub fn game(goal: u16) {
     let mut round = 0; // for finish round
     let mut darts = 0; // for total darts finish
 
-    // for first suggestion
-    suggest::suggest(goal);
-
     loop {
         let mut total = 0; // for 1 round points
         
         for i in 1..=3 {
-            print!("{} -> ", i);
+            // for suggestion
+            let suggest = suggest::suggest(goal, &i);
+            // TODO: D25 -> BULL
+            print!("{} ({}) Suggest: {:?} -> ", i, goal, suggest);
             std::io::stdout().flush().unwrap();
 
-            // input the points part
+            // input the points
             let mut point = String::new();
             std::io::stdin()
                 .read_line(&mut point)
@@ -88,12 +79,9 @@ pub fn game(goal: u16) {
         if goal > 0 {
             println!("~~~ The {} Round Total: {} ~~~", round, Color::White.underline().paint(total.to_string()));
             println!("~~~ You require {} ~~~", Color::White.underline().paint(goal.to_string()));
-            suggest::suggest(goal);
         } else {
             let comment = format!("Game shot!🎉 {} rounds ({} darts finish)", round, darts);
             println!("{}\n", Color::Cyan.bold().paint(comment));
-            // unused assingment warning, but round is used
-            round = 0;
             break;
         }
     }
