@@ -2,6 +2,7 @@
 pub fn suggest(score: u16, left_darts: &u8) -> Vec<String> {
     let mut targets = vec![];
     let left_darts = 3 - *left_darts;
+
     // 1 throw finish
     if score <= 40 && score % 2 == 0 {
         targets.push(format!("D{}", score / 2));
@@ -19,16 +20,14 @@ pub fn suggest(score: u16, left_darts: &u8) -> Vec<String> {
             if score == (nums[i] + nums[j] * 2) { // 1. single, 2. double *highest priority
                 // let mut targets = vec![];
                 targets.push(format!("S{}, D{}", nums[i], nums[j]));
-                // print!("1");
-                return targets
+                found = true;
+                // return targets
             } else if score == (nums[i] * 2 + nums[j] * 2) { // 1. double, 2. double
                 targets.push(format!("D{} D{}", nums[i], nums[j]));
                 found = true;
-                // print!("2");
             } else if score == (nums[i] * 3 + nums[j] * 2) { // 1. triple, 2. double
                 targets.push(format!("T{} D{}", nums[i], nums[j]));
                 found = true;
-                // print!("3");
             }
 
             if !found {
@@ -36,15 +35,12 @@ pub fn suggest(score: u16, left_darts: &u8) -> Vec<String> {
                     if score == (nums[i] * 3 + nums[j] + nums[k] * 2) { // 1. triple, 2. single, 3. double
                         targets.push(format!("T{} S{}, D{}", nums[i], nums[j], nums[k]));
                         found = true;
-                        // print!("4");
                     } else if score == (nums[i] * 3 + nums[j] * 3 + nums[k] * 2) { // 1. triple, 2. triple, 3. double
                         targets.push(format!("T{}, T{}, D{}", nums[i], nums[j], nums[k]));
                         found = true;
-                        // print!("5");
                     } else if score == (nums[i] * 3 + nums[j] * 2 + nums[k] * 2) {
                         targets.push(format!("T{}, D{}, D{}", nums[i], nums[j], nums[k])); // 1. triple, 2. double, 3. double
                         found = true;
-                        // print!("6");
                     }
                 }
                 
