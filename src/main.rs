@@ -20,7 +20,6 @@ fn main() -> Result<(), ()> {
                 5: Count Up\n\
                 0: Exit\n\
                 Choose a menu! -> ");
-        // print!("Choose a menu! [1: 301 Game, 2: 501 Game, 3: Cricket Game, 4: Finish Practicek 0: Exit] -> ");
         std::io::stdout().flush().unwrap();
         
         // input part of practice menu

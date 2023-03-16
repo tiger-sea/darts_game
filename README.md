@@ -8,11 +8,14 @@
   - 501
   - Cricket (in progress)
   - Random finish practice
+  - Count up
+  
+- Developing
+  - Point suggest
+  - Cricket
 
-- Future Features
-  - Throw suggestion
-  - Count Up
+- Future works
   - Desktop App???
-
+  - Rewrite the code using Rust functions like trait, struct, etc...
 
 *Tentatively published, so probably there are bugs
