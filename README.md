@@ -17,5 +17,7 @@
 - Future works
   - Desktop App???
   - Rewrite the code using Rust functions like trait, struct, etc...
+  - Make error handling better
+  - Try test code
 
 *Tentatively published, so probably there are bugs
