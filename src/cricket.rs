@@ -55,6 +55,7 @@ impl Cricket {
     fn start_game(&mut self) {
         let mut round = 0;
         let mut darts = 0;
+        let mut marks = 0;
 
         loop {
             println!("Enter section and number of marks (separate with whitespace)");
@@ -92,6 +93,7 @@ impl Cricket {
                 // devide input into two
                 let section = input[0];
                 let mark = input[1];
+                marks += mark;
 
                 // index of input section
                 let index = self.sections.iter().position(|&x| x == section).unwrap();
@@ -102,7 +104,9 @@ impl Cricket {
                 if self.check_all_closed() { // game shot
                     round += 1;
                     let comment = format!("Game shot!🎉 {} rounds ({} darts finish)", round, darts);
-                    println!("{}\n", Color::Cyan.bold().paint(comment));
+                    let stats = format!("Agerage: {} marks per round", marks/round);
+                    println!("{}", Color::Cyan.bold().paint(comment));
+                    println!("{}\n", Color::Cyan.bold().paint(stats));
                     return
                 }
             }
@@ -112,26 +116,27 @@ impl Cricket {
     }
 
     fn display(&self) {
-        let mut symbol: [&str; 7] = [""; 7];
+        let mut symbols: Vec<String> = Vec::new();
         let iter = self.number.iter();
-        for (i, &num) in iter.enumerate() {
-            match num {
-                3 => symbol[i] = "|||",
-                2 => symbol[i] = "||",
-                1 => symbol[i] = "|",
-                _ => symbol[i] = "",
-            }
+        let label_iter = ["20", "19", "18", "17", "16", "15", "BULL"].iter();
+        for (num, label) in iter.zip(label_iter) {
+            let symbol = match num {
+                3 => "|||",
+                2 => "||",
+                1 => "|",
+                _ => "",
+            };
+            symbols.push(format!("{}: {}", label, symbol));
         }
-        println!("\nProgress\n\
-                20: {}\n\
-                19: {}\n\
-                18: {}\n\
-                17: {}\n\
-                16: {}\n\
-                15: {}\n\
-                BULL: {}\n\
-                Points: {}\n",
-                symbol[0], symbol[1], symbol[2], symbol[3], symbol[4], symbol[5], symbol[6], self.point);
+
+        println!(
+            "\n{}\n\
+            {}\n\
+            Points: {}\n",
+            Color::White.bold().underline().paint("Progress"),
+            symbols.join("\n"),
+            self.point
+        );
     }
 }
 
@@ -145,3 +150,5 @@ impl Cricket {
 // 6. 点数とかかった本数を表示してmainへreturn
 
 // TODO: 対戦方式でできるようにする
+
+// TODO: 平均マーク数を計算する
